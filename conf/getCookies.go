@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"strings"
 	"github.com/Evi1/Tieba_Sign-Go---Copy/TiebaSign"
+	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 )
 
 func getCookies(cookieFileName string) (cookieJar *cookiejar.Jar, hasError bool) {
@@ -49,10 +50,11 @@ func getCookies(cookieFileName string) (cookieJar *cookiejar.Jar, hasError bool)
 }
 
 func StartCookiesWork(cookieList map[string]*cookiejar.Jar, errorList map[string]bool) {
-	fmt.Println("Loading and verifying Cookies from ./cookies/")
-	cookieFiles, _ := ioutil.ReadDir("cookies")
-	//cookieList = make(map[string]*cookiejar.Jar)
-	//errorList = make(map[string]bool)
+	fmt.Println("Loading and verifying Cookies from " + BasePath + "/cookies/")
+	cookieFiles, e := ioutil.ReadDir(BasePath + "/cookies")
+	if e != nil {
+		fmt.Println(e)
+	}
 	for k := range cookieList {
 		delete(cookieList, k)
 	}
@@ -61,7 +63,7 @@ func StartCookiesWork(cookieList map[string]*cookiejar.Jar, errorList map[string
 	}
 	for _, file := range cookieFiles {
 		profileName := strings.Replace(file.Name(), ".txt", "", 1)
-		cookie, hasError := getCookies("cookies/" + file.Name())
+		cookie, hasError := getCookies(BasePath + "/cookies/" + file.Name())
 		if hasError {
 			fmt.Errorf("Failed to load profile %s, invalid cookie!\n", profileName)
 			errorList[profileName] = true

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"bytes"
 	"text/template"
+	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 )
 
 type listT struct {
@@ -30,7 +31,7 @@ type proIT struct {
 func makeListI(x, y, tp string) (b string) {
 	a := listIT{X: x, Y: y, T: tp}
 	buf := new(bytes.Buffer)
-	t, e := template.ParseFiles("template/listInside.gtpl")
+	t, e := template.ParseFiles(BasePath + "/template/listInside.gtpl")
 	if e != nil {
 		fmt.Println(e)
 	}
@@ -44,7 +45,7 @@ func makeListI(x, y, tp string) (b string) {
 func makeList(name, inside string) (b string) {
 	a := listT{Name: name, Inside: inside}
 	buf := new(bytes.Buffer)
-	t, e := template.ParseFiles("template/list.gtpl")
+	t, e := template.ParseFiles(BasePath + "/template/list.gtpl")
 	if e != nil {
 		fmt.Println(e)
 		return ""
@@ -60,7 +61,7 @@ func makeList(name, inside string) (b string) {
 func makeProgressI(p float64, n string, ti string) (b string) {
 	a := proIT{P: p, N: n, T: ti}
 	buf := new(bytes.Buffer)
-	t, e := template.ParseFiles("template/proInside.gtpl")
+	t, e := template.ParseFiles(BasePath + "/template/proInside.gtpl")
 	if e != nil {
 		fmt.Println(e)
 	}
@@ -74,7 +75,7 @@ func makeProgressI(p float64, n string, ti string) (b string) {
 func makeProgress(title, inside string) (b string) {
 	a := proT{Title: title, Inside: inside}
 	buf := new(bytes.Buffer)
-	t, e := template.ParseFiles("template/progress.gtpl")
+	t, e := template.ParseFiles(BasePath + "/template/progress.gtpl")
 	if e != nil {
 		fmt.Println(e)
 		return ""

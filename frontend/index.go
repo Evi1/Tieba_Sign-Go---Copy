@@ -32,10 +32,10 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		buf := new(bytes.Buffer)
 		fName := ""
 		if len(r.Form["n"]) > 0 && r.Form["n"][0] == x {
-			fName = "template/menuSelect.gtpl"
+			fName = BasePath + "/template/menuSelect.gtpl"
 			isUser = true
 		} else {
-			fName = "template/menu.gtpl"
+			fName = BasePath + "/template/menu.gtpl"
 		}
 		t, e := template.ParseFiles(fName)
 		if e != nil {
@@ -69,9 +69,11 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		in.Body = indexBody()
 	}
 
-	t, e := template.ParseFiles("template/index.html") //解析模板文件
+	t, e := template.ParseFiles(BasePath + "/template/index.html") //解析模板文件
 	if e != nil {
 		fmt.Println(e)
+		fmt.Fprintln(w, "error:"+e.Error())
+		return
 	}
 	t.Execute(w, in)
 }

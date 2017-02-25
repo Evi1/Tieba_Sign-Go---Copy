@@ -20,8 +20,7 @@ func main() {
 	flag.Parse()
 
 	go backGroundWork()
-
-	http.Handle("/template/", http.StripPrefix("/template/", http.FileServer(http.Dir("./template"))))
+	http.Handle("/template/", http.StripPrefix("/template/", http.FileServer(http.Dir(BasePath+"/template"))))
 	http.HandleFunc("/", frontend.HandleIndex)
 	err := http.ListenAndServe(":60080", nil) //设置监听的端口
 	if err != nil {
@@ -46,9 +45,8 @@ func backGroundWork() {
 			currentDir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
 			os.Chdir(currentDir)
 
-			fmt.Println("Tieba Sign (Go Version) beta")
-			fmt.Println("Author: kookxiang <r18@ikk.me>")
-			fmt.Println()
+			fmt.Println("Tieba Sign start")
+
 			if t.Hour() == 0 {
 				for k := range RunList {
 					delete(RunList, k)
