@@ -1,16 +1,16 @@
 package main
 
 import (
-	"github.com/Evi1/Tieba_Sign-Go/TiebaSign"
+	"github.com/Evi1/Tieba_Sign-Go---Copy/TiebaSign"
 	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
-	"github.com/Evi1/Tieba_Sign-Go/conf"
+	"github.com/Evi1/Tieba_Sign-Go---Copy/conf"
 	"time"
 	"net/http"
-	"github.com/Evi1/Tieba_Sign-Go/frontend"
-	. "github.com/Evi1/Tieba_Sign-Go/global"
+	"github.com/Evi1/Tieba_Sign-Go---Copy/frontend"
+	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 )
 
 var maxRetryTimes int

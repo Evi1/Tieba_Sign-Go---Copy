@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"text/template"
 	"fmt"
-	. "github.com/Evi1/Tieba_Sign-Go/global"
+	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 	"bytes"
 	"strconv"
 )

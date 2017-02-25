@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"bytes"
 	"strings"
-	"github.com/Evi1/Tieba_Sign-Go/TiebaSign"
+	"github.com/Evi1/Tieba_Sign-Go---Copy/TiebaSign"
 )
 
 func getCookies(cookieFileName string) (cookieJar *cookiejar.Jar, hasError bool) {
