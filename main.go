@@ -22,7 +22,8 @@ func main() {
 	go backGroundWork()
 	http.Handle("/template/", http.StripPrefix("/template/", http.FileServer(http.Dir(BasePath+"/template"))))
 	http.HandleFunc("/", frontend.HandleIndex)
-	err := http.ListenAndServe(":60080", nil) //设置监听的端口
+
+	err := http.ListenAndServe(Server, nil) //设置监听的端口
 	if err != nil {
 		fmt.Println("ListenAndServe: ", err)
 		return
