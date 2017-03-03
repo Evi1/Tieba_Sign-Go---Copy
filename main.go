@@ -41,6 +41,12 @@ func backGroundWork() {
 	TiebaSign.StartSign(CookieList, RunList, maxRetryTimes)
 	for {
 		t := time.Now()
+		utc, err := time.LoadLocation("Asia/Shanghai")
+		if err != nil {
+			fmt.Println("err: ", err.Error())
+		} else {
+			t.In(utc)
+		}
 		if t.Minute() == 30 {
 			currentDir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
 			os.Chdir(currentDir)

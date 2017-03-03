@@ -7,6 +7,7 @@ import (
 	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 	"bytes"
 	"strconv"
+	"time"
 )
 
 type menuT struct {
@@ -15,17 +16,33 @@ type menuT struct {
 }
 
 type indexT struct {
-	Menu   string
-	Errors int
-	Counts int
-	Users  int
-	Body   string
+	Location string
+	Time     string
+	Menu     string
+	Errors   int
+	Counts   int
+	Users    int
+	Body     string
 }
 
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	//getTime
+	ti := ""
+	location := ""
+	utc, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		fmt.Println("err: ", err.Error())
+		ti = err.Error()
+	} else {
+		tt := time.Now().In(utc)
+		location = tt.Location().String()
+		ti = tt.Format("2006-01-02 15:04:05")
+	}
+
+
 	//Creat menu
-	menu := "";
+	menu := ""
 	isUser := false
 	for x := range CookieList {
 		m := menuT{Name: x, Url: "?n=" + x}
@@ -49,10 +66,10 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		}
 		menu += buf.String()
 	}
-	in := indexT{Menu: menu}
+	in := indexT{Menu: menu, Time: ti, Location: location}
 	//Create Panel
 	in.Users = len(RunList)
-	in.Errors = 0;
+	in.Errors = 0
 	in.Counts = 0
 	for _, x1 := range RunList {
 		for _, x2 := range x1 {
@@ -90,7 +107,7 @@ func indexBody() (b string) {
 	b = makeList("UserList", str)
 	str = ""
 	for k, v := range RunList {
-		n := 0;
+		n := 0
 		m := 0
 		for _, q := range v {
 			if q != "none" && q != "Failed" {
@@ -106,7 +123,7 @@ func indexBody() (b string) {
 }
 
 func userBody(user string) (b string) {
-	str := "";
+	str := ""
 	b = ""
 	for k, v := range RunList {
 		if k == user {
