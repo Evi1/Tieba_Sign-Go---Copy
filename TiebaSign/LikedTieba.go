@@ -2,9 +2,9 @@ package TiebaSign
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"strconv"
+	"fmt"
 )
 
 type LikedTieba struct {

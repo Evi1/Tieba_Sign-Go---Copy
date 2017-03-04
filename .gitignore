@@ -8,7 +8,7 @@ cookies/
 *.o
 *.a
 *.so
-
+*.log
 # Folders
 _obj
 _test

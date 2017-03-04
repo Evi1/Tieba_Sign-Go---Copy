@@ -1,10 +1,10 @@
 package frontend
 
 import (
-	"fmt"
 	"bytes"
 	"text/template"
 	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
+	"log"
 )
 
 type listT struct {
@@ -33,11 +33,11 @@ func makeListI(x, y, tp string) (b string) {
 	buf := new(bytes.Buffer)
 	t, e := template.ParseFiles(BasePath + "/template/listInside.gtpl")
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 	}
 	e = t.Execute(buf, a)
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 	}
 	b = buf.String()
 	return
@@ -47,12 +47,12 @@ func makeList(name, inside string) (b string) {
 	buf := new(bytes.Buffer)
 	t, e := template.ParseFiles(BasePath + "/template/list.gtpl")
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 		return ""
 	}
 	e = t.Execute(buf, a)
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 		return ""
 	}
 	b = buf.String()
@@ -63,11 +63,11 @@ func makeProgressI(p float64, n string, ti string) (b string) {
 	buf := new(bytes.Buffer)
 	t, e := template.ParseFiles(BasePath + "/template/proInside.gtpl")
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 	}
 	e = t.Execute(buf, a)
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 	}
 	b = buf.String()
 	return
@@ -77,12 +77,12 @@ func makeProgress(title, inside string) (b string) {
 	buf := new(bytes.Buffer)
 	t, e := template.ParseFiles(BasePath + "/template/progress.gtpl")
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 		return ""
 	}
 	e = t.Execute(buf, a)
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 		return ""
 	}
 	b = buf.String()

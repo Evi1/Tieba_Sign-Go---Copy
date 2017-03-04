@@ -2,10 +2,10 @@ package TiebaSign
 
 import (
 	"net/http/cookiejar"
-	"fmt"
 	"time"
 	"container/list"
 	"sync"
+	"log"
 )
 
 type SignTask struct {
@@ -19,15 +19,15 @@ func StartSign(cookieList map[string]*cookiejar.Jar, runList map[string]map[stri
 	for profileName, cookie := range cookieList {
 		threadList.Add(1)
 		go func(profileName string, cookie *cookiejar.Jar) {
-			fmt.Printf("[%s] Go routine started.\n", profileName)
+			log.Printf("[%s] Go routine started.\n", profileName)
 			likedTiebaList, err := GetLikedTiebaList(cookie)
 			if err != nil {
-				fmt.Printf("[%s] Error while fetching tieba list\n", profileName)
-				fmt.Printf("[%s] Go routine stopped.\n", profileName)
+				log.Printf("[%s] Error while fetching tieba list\n", profileName)
+				log.Printf("[%s] Go routine stopped.\n", profileName)
 				threadList.Done()
 				return
 			} else {
-				fmt.Printf("[%s] Loaded tieba list.\n", profileName)
+				log.Printf("[%s] Loaded tieba list.\n", profileName)
 			}
 			taskList := list.New()
 			_, ok := runList[profileName]
@@ -45,7 +45,6 @@ func StartSign(cookieList map[string]*cookiejar.Jar, runList map[string]map[stri
 					failedAttempts: 0,
 				})
 			}
-			fmt.Println(runList)
 			for {
 				taskNode := taskList.Front()
 				if taskNode == nil {
@@ -56,13 +55,13 @@ func StartSign(cookieList map[string]*cookiejar.Jar, runList map[string]map[stri
 				status, s, exp := TiebaSign(task.tieba, task.cookie)
 				if status == 2 {
 					if exp > 0 {
-						fmt.Printf(s+" [%s] Succeed: %s, Exp +%d\n", profileName, ToUtf8(task.tieba.Name), exp)
+						log.Printf(s+" [%s] Succeed: %s, Exp +%d\n", profileName, ToUtf8(task.tieba.Name), exp)
 					} else {
-						fmt.Printf(s+" [%s] Succeed: %s\n", profileName, ToUtf8(task.tieba.Name))
+						log.Printf(s+" [%s] Succeed: %s\n", profileName, ToUtf8(task.tieba.Name))
 					}
 					runList[profileName][ToUtf8(task.tieba.Name)] = s
 				} else if status == 1 {
-					fmt.Printf(s+" [%s] Failed1:  %s\n", profileName, ToUtf8(task.tieba.Name))
+					log.Printf(s+" [%s] Failed1:  %s\n", profileName, ToUtf8(task.tieba.Name))
 					task.failedAttempts++
 					if task.failedAttempts <= maxRetryTimes {
 						taskList.PushBack(task) // push failed task back to list
@@ -75,14 +74,14 @@ func StartSign(cookieList map[string]*cookiejar.Jar, runList map[string]map[stri
 					if runList[profileName][ToUtf8(task.tieba.Name)] == "none" {
 						runList[profileName][ToUtf8(task.tieba.Name)] = "Failed"
 					}
-					fmt.Printf(s+" [%s] Failed2:  %s\n", profileName, ToUtf8(task.tieba.Name))
+					log.Printf(s+" [%s] Failed2:  %s\n", profileName, ToUtf8(task.tieba.Name))
 				}
 			}
-			fmt.Printf("[%s] Finished!\n", profileName)
-			fmt.Printf("[%s] Go routine stopped.\n", profileName)
+			log.Printf("[%s] Finished!\n", profileName)
+			log.Printf("[%s] Go routine stopped.\n", profileName)
 			threadList.Done()
 		}(profileName, cookie)
 	}
 	threadList.Wait()
-	fmt.Println("All Task Finished! Congratulation!")
+	log.Println("All Task Finished! Congratulation!")
 }

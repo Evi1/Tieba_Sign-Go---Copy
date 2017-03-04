@@ -3,11 +3,12 @@ package frontend
 import (
 	"net/http"
 	"text/template"
-	"fmt"
 	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 	"bytes"
 	"strconv"
 	"time"
+	"log"
+	"fmt"
 )
 
 type menuT struct {
@@ -32,7 +33,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	location := ""
 	utc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
-		fmt.Println("err: ", err.Error())
+		log.Println("err: ", err.Error())
 		ti = err.Error()
 	} else {
 		tt := time.Now().In(utc)
@@ -56,12 +57,12 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		}
 		t, e := template.ParseFiles(fName)
 		if e != nil {
-			fmt.Println(e)
+			log.Println(e)
 			continue
 		}
 		e = t.Execute(buf, m)
 		if e != nil {
-			fmt.Println(e)
+			log.Println(e)
 			continue
 		}
 		menu += buf.String()
@@ -88,7 +89,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 
 	t, e := template.ParseFiles(BasePath + "/template/index.html") //解析模板文件
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 		fmt.Fprintln(w, "error:"+e.Error())
 		return
 	}

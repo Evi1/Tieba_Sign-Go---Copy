@@ -2,7 +2,6 @@ package conf
 
 import (
 	"net/http"
-	"fmt"
 	"net/url"
 	"net/http/cookiejar"
 	"os"
@@ -11,6 +10,7 @@ import (
 	"strings"
 	"github.com/Evi1/Tieba_Sign-Go---Copy/TiebaSign"
 	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
+	"log"
 )
 
 func getCookies(cookieFileName string) (cookieJar *cookiejar.Jar, hasError bool) {
@@ -32,14 +32,14 @@ func getCookies(cookieFileName string) (cookieJar *cookiejar.Jar, hasError bool)
 				Domain: ".baidu.com",
 			})
 		}
-		fmt.Printf("Verifying imported cookies from %s...", cookieFileName)
+		log.Printf("Verifying imported cookies from %s...", cookieFileName)
 		URL, _ := url.Parse("http://baidu.com")
 		cookieJar.SetCookies(URL, cookies)
 		if TiebaSign.GetLoginStatus(cookieJar) {
 			hasError = false
-			fmt.Println("OK")
+			log.Println("OK")
 		} else {
-			fmt.Println("Failed")
+			log.Println("Failed")
 		}
 	}
 	if hasError {
@@ -50,10 +50,10 @@ func getCookies(cookieFileName string) (cookieJar *cookiejar.Jar, hasError bool)
 }
 
 func StartCookiesWork(cookieList map[string]*cookiejar.Jar, errorList map[string]bool) {
-	fmt.Println("Loading and verifying Cookies from " + BasePath + "/cookies/")
+	log.Println("Loading and verifying Cookies from " + BasePath + "/cookies/")
 	cookieFiles, e := ioutil.ReadDir(BasePath + "/cookies")
 	if e != nil {
-		fmt.Println(e)
+		log.Println(e)
 	}
 	for k := range cookieList {
 		delete(cookieList, k)
@@ -65,7 +65,7 @@ func StartCookiesWork(cookieList map[string]*cookiejar.Jar, errorList map[string
 		profileName := strings.Replace(file.Name(), ".txt", "", 1)
 		cookie, hasError := getCookies(BasePath + "/cookies/" + file.Name())
 		if hasError {
-			fmt.Errorf("Failed to load profile %s, invalid cookie!\n", profileName)
+			log.Printf("Failed to load profile %s, invalid cookie!\n", profileName)
 			errorList[profileName] = true
 		} else {
 			cookieList[profileName] = cookie

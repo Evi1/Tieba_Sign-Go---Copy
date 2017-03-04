@@ -3,13 +3,13 @@ package TiebaSign
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
 	. "github.com/bitly/go-simplejson"
 	"net/http/cookiejar"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
+	"fmt"
 )
 
 func GetLikedTiebaList(ptrCookieJar *cookiejar.Jar) ([]LikedTieba, error) {
