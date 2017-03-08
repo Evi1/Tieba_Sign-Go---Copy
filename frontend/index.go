@@ -144,15 +144,15 @@ func indexBody() (b string) {
 func userBody(user string) (b string) {
 	str := ""
 	b = ""
-	keyList := make([]string, 0)
-	for k := range RunList {
-		keyList = append(keyList, k)
-	}
-	sort.Strings(keyList)
-	for _, k := range keyList {
-		v := RunList[k]
+	for k, v := range RunList {
 		if k == user {
-			for tb, st := range v {
+			keyList := make([]string, 0)
+			for k := range v {
+				keyList = append(keyList, k)
+			}
+			sort.Strings(keyList)
+			for _, tb := range keyList {
+				st := v[tb]
 				str += makeListI(tb, st, "fa-comment")
 			}
 		}
