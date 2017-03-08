@@ -38,7 +38,7 @@ func main() {
 	http.HandleFunc("/", frontend.HandleIndex)
 	err = http.ListenAndServe(Server, nil) //设置监听的端口
 	if err != nil {
-		log.Println("ListenAndServe: ", err)
+		fmt.Println("ListenAndServe: ", err)
 		return
 	}
 }

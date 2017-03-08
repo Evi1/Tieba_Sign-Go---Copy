@@ -9,6 +9,7 @@ import (
 	"time"
 	"log"
 	"fmt"
+	"sort"
 )
 
 type menuT struct {
@@ -45,7 +46,12 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	//Creat menu
 	menu := ""
 	isUser := false
-	for x := range CookieList {
+	keyList := make([]string, 0)
+	for k := range CookieList {
+		keyList = append(keyList, k)
+	}
+	sort.Strings(keyList)
+	for _, x := range keyList {
 		m := menuT{Name: x, Url: "?n=" + x}
 		buf := new(bytes.Buffer)
 		fName := ""
@@ -87,7 +93,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		in.Body = indexBody()
 	}
 
-	t, e := template.ParseFiles(BasePath + "/template/index.html") //解析模板文件
+	t, e := template.ParseFiles(BasePath + "/template/index.html")
 	if e != nil {
 		log.Println(e)
 		fmt.Fprintln(w, "error:"+e.Error())
@@ -98,7 +104,13 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 
 func indexBody() (b string) {
 	str := ""
-	for k, v := range ErrorList {
+	keyList := make([]string, 0)
+	for k := range ErrorList {
+		keyList = append(keyList, k)
+	}
+	sort.Strings(keyList)
+	for _, k := range keyList {
+		v := ErrorList[k]
 		if v {
 			str += makeListI(k, "Error !", "fa-user")
 		} else {
@@ -106,8 +118,15 @@ func indexBody() (b string) {
 		}
 	}
 	b = makeList("UserList", str)
+
 	str = ""
-	for k, v := range RunList {
+	keyList = make([]string, 0)
+	for k := range RunList {
+		keyList = append(keyList, k)
+	}
+	sort.Strings(keyList)
+	for _, k := range keyList {
+		v := RunList[k]
 		n := 0
 		m := 0
 		for _, q := range v {
@@ -119,14 +138,19 @@ func indexBody() (b string) {
 		str += makeProgressI(float64(n)/float64(m)*100, strconv.Itoa(n)+"/"+strconv.Itoa(m), k)
 	}
 	b += makeProgress("Finished", str)
-
 	return
 }
 
 func userBody(user string) (b string) {
 	str := ""
 	b = ""
-	for k, v := range RunList {
+	keyList := make([]string, 0)
+	for k := range RunList {
+		keyList = append(keyList, k)
+	}
+	sort.Strings(keyList)
+	for _, k := range keyList {
+		v := RunList[k]
 		if k == user {
 			for tb, st := range v {
 				str += makeListI(tb, st, "fa-comment")
