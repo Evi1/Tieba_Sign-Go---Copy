@@ -55,6 +55,7 @@ func StartCookiesWork(cookieList map[string]*cookiejar.Jar, errorList map[string
 	if e != nil {
 		log.Println(e)
 	}
+
 	for k := range cookieList {
 		delete(cookieList, k)
 	}
