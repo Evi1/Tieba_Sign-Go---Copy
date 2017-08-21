@@ -5,6 +5,7 @@ import (
 	"text/template"
 	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 	"log"
+	"strings"
 )
 
 type listT struct {
@@ -86,5 +87,15 @@ func makeProgress(title, inside string) (b string) {
 		return ""
 	}
 	b = buf.String()
+	return
+}
+func getStateAndExp(str string) (state, exp string) {
+	t := strings.Split(str, "~")
+	state = t[0]
+	if len(t) == 2 {
+		exp = t[1]
+	} else {
+		exp = "0"
+	}
 	return
 }

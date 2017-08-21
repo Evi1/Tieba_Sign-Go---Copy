@@ -141,19 +141,42 @@ func indexBody() (b string) {
 	return
 }
 
+type sortTy struct {
+	Exp  int
+	Name string
+}
+type sortList []*sortTy
+
+func (I sortList) Len() int {
+	return len(I)
+}
+func (I sortList) Less(i, j int) bool {
+	return I[i].Exp > I[j].Exp
+}
+func (I sortList) Swap(i, j int) {
+	I[i], I[j] = I[j], I[i]
+}
+
 func userBody(user string) (b string) {
 	str := ""
 	b = ""
 	for k, v := range RunList {
 		if k == user {
-			keyList := make([]string, 0)
-			for k := range v {
-				keyList = append(keyList, k)
+			var list sortList
+			for tk, tv := range v {
+				_, e := getStateAndExp(tv)
+				ex, _ := strconv.Atoi(e)
+				fk := sortTy{Exp: ex, Name: tk}
+				list = append(list, &fk)
 			}
-			sort.Strings(keyList)
-			for _, tb := range keyList {
-				st := v[tb]
-				str += makeListI(tb, st, "fa-comment")
+			sort.Sort(list)
+			for _, tb := range list {
+				st := v[tb.Name]
+				if st == "none" || st == "Failed" {
+					str += makeListI(tb.Name, st, "fa-comment")
+				} else {
+					str += makeListI(tb.Name, st+" exp!", "fa-comment")
+				}
 			}
 		}
 	}

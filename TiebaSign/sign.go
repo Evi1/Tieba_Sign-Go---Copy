@@ -6,6 +6,7 @@ import (
 	"container/list"
 	"sync"
 	"log"
+	"strconv"
 )
 
 type SignTask struct {
@@ -59,7 +60,7 @@ func StartSign(cookieList map[string]*cookiejar.Jar, runList map[string]map[stri
 					} else {
 						log.Printf(s+" [%s] Succeed: %s\n", profileName, ToUtf8(task.tieba.Name))
 					}
-					runList[profileName][ToUtf8(task.tieba.Name)] = s
+					runList[profileName][ToUtf8(task.tieba.Name)] = s + "~" + strconv.Itoa(task.tieba.Exp)
 				} else if status == 1 {
 					log.Printf(s+" [%s] Failed1:  %s\n", profileName, ToUtf8(task.tieba.Name))
 					task.failedAttempts++
