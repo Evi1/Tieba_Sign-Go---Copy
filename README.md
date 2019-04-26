@@ -4,6 +4,8 @@
 
 A faster && lighter sign robot for http://tieba.baidu.com which can help you get more credit at tieba.  
 
+From https://github.com/kookxiang/Tieba_Sign-Go
+
 Demo:
 https://sign.bilibili.network/
 
