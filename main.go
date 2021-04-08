@@ -1,17 +1,18 @@
 package main
 
 import (
-	"github.com/Evi1/Tieba_Sign-Go---Copy/TiebaSign"
 	"flag"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 	"path/filepath"
-	"github.com/Evi1/Tieba_Sign-Go---Copy/conf"
 	"time"
-	"net/http"
-	"github.com/Evi1/Tieba_Sign-Go---Copy/frontend"
-	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
-	"log"
+
+	"github.com/rikaaa0928/Tieba_Sign-Go---Copy/TiebaSign"
+	"github.com/rikaaa0928/Tieba_Sign-Go---Copy/conf"
+	"github.com/rikaaa0928/Tieba_Sign-Go---Copy/frontend"
+	. "github.com/rikaaa0928/Tieba_Sign-Go---Copy/global"
 )
 
 var maxRetryTimes int

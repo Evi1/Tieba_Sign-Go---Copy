@@ -1,16 +1,17 @@
 package conf
 
 import (
-	"net/http"
-	"net/url"
-	"net/http/cookiejar"
-	"os"
-	"io/ioutil"
 	"bytes"
-	"strings"
-	"github.com/Evi1/Tieba_Sign-Go---Copy/TiebaSign"
-	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
+	"io/ioutil"
 	"log"
+	"net/http"
+	"net/http/cookiejar"
+	"net/url"
+	"os"
+	"strings"
+
+	"github.com/rikaaa0928/Tieba_Sign-Go---Copy/TiebaSign"
+	. "github.com/rikaaa0928/Tieba_Sign-Go---Copy/global"
 )
 
 func getCookies(cookieFileName string) (cookieJar *cookiejar.Jar, hasError bool) {

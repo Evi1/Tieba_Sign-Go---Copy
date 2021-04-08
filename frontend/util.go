@@ -2,10 +2,11 @@ package frontend
 
 import (
 	"bytes"
-	"text/template"
-	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 	"log"
 	"strings"
+	"text/template"
+
+	. "github.com/rikaaa0928/Tieba_Sign-Go---Copy/global"
 )
 
 type listT struct {

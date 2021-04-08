@@ -1,15 +1,16 @@
 package frontend
 
 import (
-	"net/http"
-	"text/template"
-	. "github.com/Evi1/Tieba_Sign-Go---Copy/global"
 	"bytes"
-	"strconv"
-	"time"
-	"log"
 	"fmt"
+	"log"
+	"net/http"
 	"sort"
+	"strconv"
+	"text/template"
+	"time"
+
+	. "github.com/rikaaa0928/Tieba_Sign-Go---Copy/global"
 )
 
 type menuT struct {
@@ -41,7 +42,6 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 		location = tt.Location().String()
 		ti = tt.Format("2006-01-02 15:04:05")
 	}
-
 
 	//Creat menu
 	menu := ""
